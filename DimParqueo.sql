@@ -1,7 +1,14 @@
-IF EXISTS (SELECT * FROM DimParqueo)
-	TRUNCATE TABLE DimParqueo
+IF OBJECT_ID ('DimParqueo', 'U') is not null
+	DROP TABLE DimParqueo;
 
-insert into DimParqueo (IdParqueo, Provincia, Canton, Distrito)
+CREATE TABLE DimParqueo (
+    IdParqueo int not null primary key,
+    Provincia varchar(50),
+    Canton varchar(50),
+    Distrito varchar(50)
+);
+
+insert into DimParqueo
 select p.IDParqueo, pc.Descripcion, c.Descripcion, d.Descripcion
 from (((Parqueo p
 INNER JOIN
